@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="330.0" prefWidth="330.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.hdised.calibration.gui.controllers.LoadingSceneController">
+   <children>
+      <AnchorPane layoutY="2.0" prefHeight="243.0" prefWidth="331.0">
+         <children>
+            <Pane prefHeight="243.0" prefWidth="331.0">
+               <children>
+                  <Label layoutX="140.0" layoutY="113.0" text="Loading..." />
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

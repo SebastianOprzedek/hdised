@@ -16,22 +16,15 @@ abstract public class InputReader {
 
     abstract protected Map<String, String> parseLine(String line);
 
-    protected List<String> getLines() {
+    protected List<String> getLines() throws IOException{
         List<String> lines = new ArrayList<>();
-        try {
-            Scanner scanner = new Scanner(file);
-            while (scanner.hasNextLine())
-                lines.add(scanner.nextLine());
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-        finally {
-            return lines;
-        }
+        Scanner scanner = new Scanner(file);
+        while (scanner.hasNextLine())
+            lines.add(scanner.nextLine());
+        return lines;
     }
 
-    public Map<String, List<String>> getData(){
+    public Map<String, List<String>> getData() throws IOException{
         Map<String, List<String>> data = new HashMap<>();
         List<String> lines = getLines();
         for (String line : lines) {
