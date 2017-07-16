@@ -26,8 +26,8 @@ public class ResourceHelper {
 
     private static class Parameter {
         @XmlAttribute
-        public String key;
+        String key;
         @XmlAttribute
-        public String value;
+        String value;
     }
 }
