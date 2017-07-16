@@ -1,8 +1,9 @@
 package pl.hdised.calibration.input;
 
 import pl.hdised.calibration.common.ResourceHelper;
-
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,5 +28,17 @@ public class TankMeasuresInputReader extends InputReader{
 //        data.put("waterHeight", parts[7]);  //despite documentation log files doesn't contain these columns
 //        data.put("waterVolume", parts[8]);
         return data;
+    }
+
+    public String get() throws IOException {
+        StringBuilder input = new StringBuilder();
+        Map<String, List<String>> tankMeasures = getData();
+        for (String key : tankMeasures.keySet()) {
+            input.append(key).append(":\n");
+            for (String value : tankMeasures.get(key))
+                input.append(value).append(", ");
+            input.append("\n\n");
+        }
+        return input.toString();
     }
 }

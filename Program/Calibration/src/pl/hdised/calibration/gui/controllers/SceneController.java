@@ -9,7 +9,7 @@ import javafx.stage.Stage;
  */
 abstract class SceneController {
     @FXML
-    private Scene defaultScene;
+    protected Scene defaultScene;
     @FXML
     private Scene currentScene;
 
