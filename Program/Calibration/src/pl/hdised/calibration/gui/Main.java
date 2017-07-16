@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage mainStage) throws Exception{
         mainStage.setTitle("Calibration");
-        mainStage.setScene(new MainScene(330, 330));
+        mainStage.setScene(new MainScene());
         mainStage.getScene();
         mainStage.getIcons().add(new Image(ResourceHelper.getResource("MainIcon")));
         mainStage.show();

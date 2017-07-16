@@ -12,11 +12,12 @@ import java.io.IOException;
  */
 public class MainScene extends Scene {
 
-    public MainScene(int width, int height) throws IOException {
-        super(new Parent() {}, width, height);
+    public MainScene() throws IOException {
+        super(new Parent() {});
         FXMLLoader loader = new FXMLLoader(LoadingScene.class.getResource("../view/mainScene.fxml"));
-        loader.setController(new MainSceneController(this));
         this.setRoot(loader.load());
+        MainSceneController mainSceneController = loader.getController();
+        mainSceneController.initializeTabs(this);
     }
 
 }

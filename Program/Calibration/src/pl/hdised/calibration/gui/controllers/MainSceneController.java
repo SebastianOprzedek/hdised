@@ -1,47 +1,27 @@
 package pl.hdised.calibration.gui.controllers;
 
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TextArea;
-import javafx.event.ActionEvent;
-import pl.hdised.calibration.common.ResourceHelper;
-import pl.hdised.calibration.gui.scenes.LoadingScene;
-import pl.hdised.calibration.input.TankMeasuresInputReader;
+import javafx.scene.control.Tab;
 import java.io.IOException;
 
-public class MainSceneController extends SceneController{
+public class MainSceneController{
     @FXML
-    private TextArea textArea;
-
-    public MainSceneController(Scene defaultScene){
-        super(defaultScene);
-    }
+    private Tab readingDataTab;
 
     @FXML
-    protected void readData(ActionEvent event) throws IOException {
-        Task task = new Task<String>() {
-            protected String call() throws IOException {
-                return new TankMeasuresInputReader().get();
-            }
-            @Override protected void cancelled() {
-                super.cancelled();
-                textArea.setText("Task cancelled");
-                setDefaultScene();
-            }
-            @Override protected void succeeded() {
-                super.succeeded();
-                textArea.setText(this.getValue());
-                setDefaultScene();
-            }
-            @Override protected void failed() {
-                super.failed();
-                textArea.setText("Task failed\nCheck if file \"" + ResourceHelper.getResource("TankMeasuresPath") + "\" exists");
-                setDefaultScene();
-            }
-        };
-        setScene(new LoadingScene(defaultScene, task));
-        new Thread(task).start();
+    private Tab calibrationTab;
+
+    @FXML
+    public void initializeTabs(Scene defaultScene) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/readingDataTab.fxml"));
+        loader.setController(new ReadingDataTabController(defaultScene));
+        readingDataTab.setContent(loader.load());
+
+        loader = new FXMLLoader(getClass().getResource("../view/calibrationTab.fxml"));
+        loader.setController(new CalibrationTabController());
+        calibrationTab.setContent(loader.load());
     }
 
 }
