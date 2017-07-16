@@ -11,9 +11,7 @@ import java.util.Map;
  */
 public class TankMeasuresInputReader extends InputReader{
 
-    public TankMeasuresInputReader(){
-        super(ResourceHelper.getResource("TankMeasuresPath"));
-    }
+    public TankMeasuresInputReader(String filename){ super(filename); }
 
     protected Map<String, String> parseLine(String line){
         String[] parts = line.split(";");
@@ -33,12 +31,11 @@ public class TankMeasuresInputReader extends InputReader{
     public String get() throws IOException {
         StringBuilder input = new StringBuilder();
         Map<String, List<String>> tankMeasures = getData();
-        for (String key : tankMeasures.keySet()) {
+        tankMeasures.keySet().forEach(key -> {
             input.append(key).append(":\n");
-            for (String value : tankMeasures.get(key))
-                input.append(value).append(", ");
+            tankMeasures.get(key).forEach(value -> input.append(value).append(", "));
             input.append("\n\n");
-        }
+        });
         return input.toString();
     }
 }

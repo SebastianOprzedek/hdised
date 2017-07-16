@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <parameters>
-    <parameter key="TankMeasuresPath" value="data/tankMeasures.log"/>
+    <parameter key="OrginalTankMeasures1" value="data/orginal/Set 1/tankMeasures.log"/>
+    <parameter key="OrginalTankMeasures2" value="data/orginal/Set 2/tankMeasures.log"/>
+    <parameter key="OrginalTankMeasures3" value="data/orginal/Set 3/tankMeasures.log"/>
+    <parameter key="DeformedTankMeasures1" value="data/deformed/Set 1/tankMeasures.log"/>
+    <parameter key="DeformedTankMeasures2" value="data/deformed/Set 2/tankMeasures.log"/>
+    <parameter key="DeformedTankMeasures3" value="data/deformed/Set 3/tankMeasures.log"/>
     <parameter key="MainIcon" value="file:resources/icon.png"/>
 </parameters>

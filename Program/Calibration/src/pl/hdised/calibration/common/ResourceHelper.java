@@ -12,7 +12,7 @@ import java.util.List;
 public class ResourceHelper {
     private static Parameters parameters = JAXB.unmarshal(new File("src/pl/hdised/calibration/properties.xml"), Parameters.class);
 
-    public static String getResource(String key){
+    public static String get(String key){
         for(Parameter parameter : parameters.items)
             if(parameter.key.equals(key))
                 return parameter.value;

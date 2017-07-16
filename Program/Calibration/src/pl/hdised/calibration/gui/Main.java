@@ -13,7 +13,7 @@ public class Main extends Application {
         mainStage.setTitle("Calibration");
         mainStage.setScene(new MainScene());
         mainStage.getScene();
-        mainStage.getIcons().add(new Image(ResourceHelper.getResource("MainIcon")));
+        mainStage.getIcons().add(new Image(ResourceHelper.get("MainIcon")));
         mainStage.show();
     }
 

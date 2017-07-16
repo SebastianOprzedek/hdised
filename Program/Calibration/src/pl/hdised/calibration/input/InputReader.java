@@ -16,7 +16,7 @@ abstract public class InputReader {
 
     abstract protected Map<String, String> parseLine(String line);
 
-    protected List<String> getLines() throws IOException{
+    private List<String> getLines() throws IOException{
         List<String> lines = new ArrayList<>();
         Scanner scanner = new Scanner(file);
         while (scanner.hasNextLine())
@@ -27,14 +27,14 @@ abstract public class InputReader {
     public Map<String, List<String>> getData() throws IOException{
         Map<String, List<String>> data = new HashMap<>();
         List<String> lines = getLines();
-        for (String line : lines) {
+        lines.forEach(line -> {
             Map<String, String> lineValues = parseLine(line);
-            for (String key : lineValues.keySet()){
-                List<String> valueSet = data.containsKey(key) ? data.get(key) : new ArrayList<String>();
+            lineValues.keySet().forEach(key -> {
+                List<String> valueSet = data.containsKey(key) ? data.get(key) : new ArrayList<>();
                 valueSet.add(lineValues.get(key));
                 data.put(key, valueSet);
-            }
-        }
+            });
+        });
         return data;
     }
 }
