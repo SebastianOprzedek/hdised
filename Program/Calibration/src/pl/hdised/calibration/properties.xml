@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <parameters>
     <parameter key="TankMeasuresPath" value="data/tankMeasures.log"/>
+    <parameter key="MainIcon" value="file:resources/icon.png"/>
 </parameters>
