@@ -3,7 +3,7 @@ package pl.hdised.calibration.gui;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import pl.hdised.calibration.common.ResourceHelper;
+import pl.hdised.calibration.common.resourcehelper.ResourceHelper;
 import pl.hdised.calibration.gui.scenes.MainScene;
 
 public class Main extends Application {
@@ -13,7 +13,7 @@ public class Main extends Application {
         mainStage.setTitle("Calibration");
         mainStage.setScene(new MainScene());
         mainStage.getScene();
-        mainStage.getIcons().add(new Image(ResourceHelper.get("MainIcon")));
+        mainStage.getIcons().add(new Image(new ResourceHelper().get("MainIcon")));
         mainStage.show();
     }
 

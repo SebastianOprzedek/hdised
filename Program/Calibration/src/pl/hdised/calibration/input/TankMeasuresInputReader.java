@@ -1,6 +1,5 @@
 package pl.hdised.calibration.input;
 
-import pl.hdised.calibration.common.ResourceHelper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;

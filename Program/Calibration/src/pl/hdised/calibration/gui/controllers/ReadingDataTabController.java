@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import pl.hdised.calibration.common.ResourceHelper;
+import pl.hdised.calibration.common.resourcehelper.ResourceHelper;
 import pl.hdised.calibration.gui.models.FileTablePosition;
 import pl.hdised.calibration.gui.scenes.LoadingScene;
 import pl.hdised.calibration.gui.utils.SceneSwitcher;
@@ -30,12 +30,13 @@ public class ReadingDataTabController extends SceneSwitcher {
 
     @FXML
     private List<String> filenameList = new ArrayList<String>(){{
-        add(ResourceHelper.get("OrginalTankMeasures1"));
-        add(ResourceHelper.get("OrginalTankMeasures2"));
-        add(ResourceHelper.get("OrginalTankMeasures3"));
-        add(ResourceHelper.get("DeformedTankMeasures1"));
-        add(ResourceHelper.get("DeformedTankMeasures2"));
-        add(ResourceHelper.get("DeformedTankMeasures3"));
+        ResourceHelper resourceHelper = new ResourceHelper();
+        add(resourceHelper.get("OrginalTankMeasures1"));
+        add(resourceHelper.get("OrginalTankMeasures2"));
+        add(resourceHelper.get("OrginalTankMeasures3"));
+        add(resourceHelper.get("DeformedTankMeasures1"));
+        add(resourceHelper.get("DeformedTankMeasures2"));
+        add(resourceHelper.get("DeformedTankMeasures3"));
     }};
 
     ReadingDataTabController(Scene defaultScene) {
