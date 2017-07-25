@@ -27,7 +27,7 @@ public class TankMeasuresInputReader extends InputReader{
         return data;
     }
 
-    public String get() throws IOException {
+    public String getAsString() throws IOException {
         StringBuilder input = new StringBuilder();
         Map<String, List<String>> tankMeasures = getData();
         tankMeasures.keySet().forEach(key -> {
