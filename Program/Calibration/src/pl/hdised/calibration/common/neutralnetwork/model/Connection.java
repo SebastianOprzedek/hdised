@@ -6,4 +6,8 @@ package pl.hdised.calibration.common.neutralnetwork.model;
 class Connection {
     double weight;
     double deltaWeight;
+
+    Connection(double weight){
+        this.weight = weight;
+    }
 }

@@ -8,16 +8,18 @@ import java.lang.Math;
  */
 public class Net {
 
+    static final double DEFAULT_ALPHA = 0.3;
+    static final double DEFAULT_ETA = 0.2;
     private Neuron[][] topology;
     private double error;
     private double recentAverageError;
     private double recentAverageSmoothingFactor;
 
-    Net(int[] topologySchema, double alpha, double eta){
-        topology = new TopologyHelper().createTopology(topologySchema, alpha, eta);
+    public Net(int[] topologySchema){
+        topology = new TopologyHelper().createTopology(topologySchema, DEFAULT_ALPHA, DEFAULT_ETA);
     }
 
-    void feedForward(double[] inputValues)
+    public void feedForward(double[] inputValues)
     {
         for (int whichInput = 0; whichInput < inputValues.length; ++whichInput)
             topology[0][whichInput].setOutputValue(inputValues[whichInput]);
@@ -29,7 +31,7 @@ public class Net {
         }
     }
 
-    void backPropagtion(double[] targetValues)
+    public void backPropagtion(double[] targetValues)
     {
         Neuron[] outputLayer = topology[topology.length-1];
         error = 0.0;
@@ -58,12 +60,15 @@ public class Net {
         }
     }
 
-    double[] getResults()
+    public double[] getResults()
     {
-        double[] resultValues = new double[topology[topology.length-1].length];
+        double[] resultValues = new double[topology[topology.length-1].length -1];
         for (int whichNeuron = 0; whichNeuron < topology[topology.length-1].length - 1; ++whichNeuron)
             resultValues[whichNeuron] = topology[topology.length-1][whichNeuron].getOutputValue();
         return resultValues;
     }
 
+    public double getRecentAverageError() {
+        return recentAverageError;
+    }
 }

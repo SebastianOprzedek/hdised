@@ -21,9 +21,8 @@ public class Neuron {
         alpha = _alpha;
         eta = _eta;
         outputWeights = new Connection[howManyOutputs];
-        for (int i = 0; i < howManyOutputs; ++i)	{
-            outputWeights[i].weight = Math.random();
-        }
+        for (int i = 0; i < howManyOutputs; ++i)
+            outputWeights[i] = new Connection(Math.random());
     }
 
     void feedForward(Neuron[] previousLayer)

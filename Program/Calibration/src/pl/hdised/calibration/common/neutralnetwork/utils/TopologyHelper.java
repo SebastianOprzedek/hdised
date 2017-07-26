@@ -13,8 +13,8 @@ public class TopologyHelper {
         Neuron[][] topology = new Neuron[howManyLayers][];
         for (int i = 0; i < howManyLayers; ++i)
         {
-            topology[i] = new Neuron[howManyLayers];
             int howManyOutputs = i == topologySchema.length - 1 ? 0 : topologySchema[i + 1];
+            topology[i] = new Neuron[topologySchema[i]+1];
             for (int j = 0; j <= topologySchema[i]; ++j)
                 topology[i][j] = new Neuron(howManyOutputs, j, alpha, eta);
             topology[i][topologySchema[i]].setOutputValue(1.0);
