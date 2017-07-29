@@ -54,16 +54,15 @@ public class ReadingDataTabController extends SceneSwitcher {
 
     @FXML
     protected void readData(ActionEvent event) throws IOException {
+        final CalibrationData calibrationData = new CalibrationData();
         Task task = new Task<String>() {
             protected String call() throws IOException {
                 NeutralNetworkController neutralNetworkController = new NeutralNetworkController();
                 StringBuilder input = new StringBuilder();
-                CalibrationData calibrationData = new CalibrationData();
                 for(Object item : filesTable.getItems())
                     if (((FilePosition) item).getChecked())
                         calibrationData.append(new TankMeasuresMeasuresInputReader(((FilePosition) item).getFilename()).getData());
                 calibrationData.writeDataToFile("calibrationData.txt");
-                mainController.setShowDataTab(calibrationData);
                 return input.toString();
             }
             @Override protected void cancelled() {
@@ -73,6 +72,7 @@ public class ReadingDataTabController extends SceneSwitcher {
             }
             @Override protected void succeeded() {
                 super.succeeded();
+                mainController.setShowDataTab(calibrationData);
                 setDefaultScene();
             }
             @Override protected void failed() {

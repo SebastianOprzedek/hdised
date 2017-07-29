@@ -29,7 +29,7 @@ public class MainSceneController{
         readingDataTab.setContent(loader.load());
 
         loader = new FXMLLoader(getClass().getResource("../view/calibrationTab.fxml"));
-        loader.setController(calibrationTabController = new CalibrationTabController());
+        loader.setController(calibrationTabController = new CalibrationTabController(this));
         calibrationTab.setContent(loader.load());
 
         loader = new FXMLLoader(getClass().getResource("../view/showDataTab.fxml"));

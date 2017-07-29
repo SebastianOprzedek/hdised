@@ -1,5 +1,6 @@
 package pl.hdised.calibration.common.neutralnetwork;
 
+import pl.hdised.calibration.common.ArrayHelper;
 import pl.hdised.calibration.common.neutralnetwork.model.Net;
 import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataReader;
 import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataWriter;
@@ -30,7 +31,7 @@ public class NeutralNetworkController {
         }
     }
 
-    public String launchLearning() throws IOException {
+    public String launchLearningFromFile() throws IOException {
         TrainingDataReader trainingDataReader = new TrainingDataReader("trainingData.txt");
         StringBuilder stringBuilder = new StringBuilder();
         int[] topologySchema = trainingDataReader.getTopology();
@@ -58,5 +59,39 @@ public class NeutralNetworkController {
         }
 //        net.save("net.txt");
     return stringBuilder.toString();
+    }
+
+    public String launchLearning(double[][] inputData, double[][] outputData) throws IOException {
+        int dataSize = new ArrayHelper().minSecondLayerLength(inputData, outputData);
+        StringBuilder stringBuilder = new StringBuilder();
+        int[] topologySchema = new TopologyHelper().createTopologySchema(inputData.length, outputData.length);
+        Net net = new Net(topologySchema);
+
+        int trainingPass = 0;
+        while (trainingPass < dataSize) {
+            stringBuilder.append("Pass: ").append(trainingPass+1).append("\t-\tInputs:");
+            double[] inputValues = new double[inputData.length];
+            for(int i=0; i<inputData.length; ++i)
+                inputValues[i] = inputData[i][trainingPass];
+            for (double value : inputValues)
+                stringBuilder.append(' ').append(value);
+            net.feedForward(inputValues); //TODO: normalize values
+            stringBuilder.append("\tResults:");
+            double[] resultValues = net.getResults();
+            for (double value : resultValues)
+                stringBuilder.append(' ').append(value);
+            stringBuilder.append("\tTargets:");
+            double[] targetValues = new double[outputData.length];
+            for(int i=0; i<outputData.length; ++i)
+                targetValues[i] = outputData[i][trainingPass];
+            for (double value : targetValues)
+                stringBuilder.append(' ').append(value);
+            net.backPropagtion(targetValues);
+            double error = net.getRecentAverageError();
+            stringBuilder.append("\tNet recent average error: ").append(error).append("\n");
+            trainingPass++;
+        }
+//        net.save("net.txt");
+        return stringBuilder.toString();
     }
 }

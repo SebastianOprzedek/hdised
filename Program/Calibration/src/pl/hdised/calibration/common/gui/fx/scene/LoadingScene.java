@@ -14,7 +14,7 @@ public class LoadingScene extends Scene{
 
     public LoadingScene(Scene previousScene, Task task) throws IOException{
         super(new Parent() {});
-        FXMLLoader loader = new FXMLLoader(LoadingScene.class.getResource("../../common/gui/fx/view/loadingScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(LoadingScene.class.getResource("../view/loadingScene.fxml"));
         loader.setController(new LoadingSceneController(this, task));
         this.setRoot(loader.load());
     }

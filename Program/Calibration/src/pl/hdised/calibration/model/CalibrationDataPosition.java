@@ -52,6 +52,6 @@ public class CalibrationDataPosition {
 
     @Override
     public String toString(){
-        return tankId + " " + fuelHeight + " " + fuelVolume;
+        return getTankId() + " " + getFuelHeight() + " " + getFuelVolume();
     }
 }
