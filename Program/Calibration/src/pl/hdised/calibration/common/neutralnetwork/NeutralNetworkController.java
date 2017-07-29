@@ -3,12 +3,8 @@ package pl.hdised.calibration.common.neutralnetwork;
 import pl.hdised.calibration.common.neutralnetwork.model.Net;
 import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataReader;
 import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataWriter;
-import pl.hdised.calibration.common.neutralnetwork.utils.TopologyHelper;
-
-import java.io.File;
-import java.io.FileReader;
+import pl.hdised.calibration.common.neutralnetwork.util.TopologyHelper;
 import java.io.IOException;
-import java.io.LineNumberReader;
 
 /**
  * Created by Sebastian Oprzędek on 18.07.2017.

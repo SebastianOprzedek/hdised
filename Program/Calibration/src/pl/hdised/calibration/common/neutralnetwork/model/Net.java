@@ -1,6 +1,6 @@
 package pl.hdised.calibration.common.neutralnetwork.model;
 
-import pl.hdised.calibration.common.neutralnetwork.utils.TopologyHelper;
+import pl.hdised.calibration.common.neutralnetwork.util.TopologyHelper;
 import java.lang.Math;
 
 /**

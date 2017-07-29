@@ -3,11 +3,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="center" hgap="10" prefHeight="500.0" prefWidth="500.0" minHeight="500.0" minWidth="500.0"  maxHeight="500.0" maxWidth="500.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.hdised.calibration.gui.controllers.MainSceneController">
+<GridPane alignment="center" hgap="10" prefHeight="500.0" prefWidth="500.0" minHeight="500.0" minWidth="500.0"  maxHeight="500.0" maxWidth="500.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.hdised.calibration.gui.controller.MainSceneController">
     <children>
-        <TabPane prefHeight="500.0" prefWidth="500.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane fx:id="tabPane" prefHeight="500.0" prefWidth="500.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab fx:id="readingDataTab" text="Read data">
+                </Tab>
+                <Tab fx:id="showDataTab" text="Show data">
                 </Tab>
                 <Tab fx:id="calibrationTab" text="Calibration">
                 </Tab>

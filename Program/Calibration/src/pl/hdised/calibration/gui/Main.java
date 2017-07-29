@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import pl.hdised.calibration.common.resourcehelper.ResourceHelper;
-import pl.hdised.calibration.gui.scenes.MainScene;
+import pl.hdised.calibration.gui.scene.MainScene;
 
 public class Main extends Application {
 
