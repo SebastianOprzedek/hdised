@@ -42,4 +42,40 @@ public class ArrayHelper {
             return max;
         }
     }
+
+    public double max(double[] array){
+        double max = array[0];
+        for (int i = 1; i < array.length; i++)
+            if (max < array[i])
+                max = array[i];
+        return max;
+    }
+
+    public double max(double[][] array){
+        double max = max(array[0]);
+        for (int i = 1; i < array.length; i++) {
+            double temporaryMax = max(array[i]);
+            if (max < temporaryMax)
+                max = temporaryMax;
+        }
+        return max;
+    }
+
+    public double min(double[] array){
+        double min = array[0];
+        for (int i = 1; i < array.length; i++)
+            if (min > array[i])
+                min = array[i];
+        return min;
+    }
+
+    public double min(double[][] array){
+        double min = min(array[0]);
+        for (int i = 1; i < array.length; i++) {
+            double temporaryMin = min(array[i]);
+            if (min < temporaryMin)
+                min = temporaryMin;
+        }
+        return min;
+    }
 }

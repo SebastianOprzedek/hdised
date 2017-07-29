@@ -1,6 +1,8 @@
 package pl.hdised.calibration.common.neutralnetwork;
 
 import pl.hdised.calibration.common.ArrayHelper;
+import pl.hdised.calibration.common.Normalizer;
+import pl.hdised.calibration.common.NormalizerHelper;
 import pl.hdised.calibration.common.neutralnetwork.model.Net;
 import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataReader;
 import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataWriter;
@@ -66,24 +68,31 @@ public class NeutralNetworkController {
         StringBuilder stringBuilder = new StringBuilder();
         int[] topologySchema = new TopologyHelper().createTopologySchema(inputData.length, outputData.length);
         Net net = new Net(topologySchema);
+        Normalizer[] inputNormalizers = new NormalizerHelper().createNormalizersForArray(inputData);
+        Normalizer[] outputNormalizers = new NormalizerHelper().createNormalizersForArray(outputData);
 
         int trainingPass = 0;
         while (trainingPass < dataSize) {
             stringBuilder.append("Pass: ").append(trainingPass+1).append("\t-\tInputs:");
             double[] inputValues = new double[inputData.length];
             for(int i=0; i<inputData.length; ++i)
-                inputValues[i] = inputData[i][trainingPass];
+                inputValues[i] = inputNormalizers[i].normalize(inputData[i][trainingPass]);
             for (double value : inputValues)
                 stringBuilder.append(' ').append(value);
-            net.feedForward(inputValues); //TODO: normalize values
+            net.feedForward(inputValues);
             stringBuilder.append("\tResults:");
             double[] resultValues = net.getResults();
+            for (double value : resultValues)
+                stringBuilder.append(' ').append(value);
+            stringBuilder.append("\tResults normalized:");
+            for(int i=0; i<resultValues.length; ++i)
+                resultValues[i] = outputNormalizers[i].realValue(resultValues[i]);
             for (double value : resultValues)
                 stringBuilder.append(' ').append(value);
             stringBuilder.append("\tTargets:");
             double[] targetValues = new double[outputData.length];
             for(int i=0; i<outputData.length; ++i)
-                targetValues[i] = outputData[i][trainingPass];
+                targetValues[i] = outputNormalizers[i].normalize(outputData[i][trainingPass]);
             for (double value : targetValues)
                 stringBuilder.append(' ').append(value);
             net.backPropagtion(targetValues);
@@ -91,7 +100,6 @@ public class NeutralNetworkController {
             stringBuilder.append("\tNet recent average error: ").append(error).append("\n");
             trainingPass++;
         }
-//        net.save("net.txt");
         return stringBuilder.toString();
     }
 }
