@@ -78,4 +78,11 @@ public class ArrayHelper {
         }
         return min;
     }
+
+    public double[] getColumn(double[][] array, int columnIndex){
+        double[] column = new double[array.length];
+        for(int i=0; i<column.length; ++i)
+            column[i] = array[i][columnIndex];
+        return column;
+    }
 }

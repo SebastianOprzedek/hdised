@@ -1,17 +1,22 @@
 package pl.hdised.calibration.gui.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import pl.hdised.calibration.common.gui.fx.dialog.Dialog;
 import pl.hdised.calibration.common.gui.fx.scene.LoadingScene;
 import pl.hdised.calibration.common.gui.fx.util.SceneSwitcher;
 import pl.hdised.calibration.common.neutralnetwork.NeutralNetworkController;
+import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataPosition;
 import pl.hdised.calibration.model.CalibrationData;
+import pl.hdised.calibration.model.CalibrationTrainingDataPosition;
 
 import java.io.IOException;
 
@@ -21,14 +26,15 @@ import java.io.IOException;
 public class CalibrationTabController extends SceneSwitcher {
     private MainSceneController mainController;
     private NeutralNetworkController neutralNetworkController;
-    @FXML
-    private TextArea textArea;
+    private ObservableList<CalibrationTrainingDataPosition> data;
     @FXML
     private TextField tankId;
     @FXML
     private TextField fuelHeight;
     @FXML
     private TextField fuelVolume;
+    @FXML
+    private TableView trainingDataPositionTable;
 
     public CalibrationTabController(Scene defaultScene, MainSceneController tabController){
         super(defaultScene);
@@ -37,9 +43,16 @@ public class CalibrationTabController extends SceneSwitcher {
     }
 
     @FXML
+    public void initialize(){
+        trainingDataPositionTable.setEditable(true);
+        data = FXCollections.observableArrayList();
+        trainingDataPositionTable.setItems(data);
+    }
+
+    @FXML
     protected void train(ActionEvent event) throws IOException {
-        Task task = new Task<String>() {
-            protected String call() throws IOException {
+        Task task = new Task<TrainingDataPosition[]>() {
+            protected TrainingDataPosition[] call() throws IOException {
                 CalibrationData calibrationData = mainController.getCalibrationData();
                 double[][] inputData = {calibrationData.getTankIds(), calibrationData.getFuelHeights()};
                 double[][] outputData = {calibrationData.getFuelVolumes()};
@@ -52,17 +65,24 @@ public class CalibrationTabController extends SceneSwitcher {
             }
             @Override protected void succeeded() {
                 super.succeeded();
-                textArea.appendText(this.getValue());
+                updateTable(this.getValue());
                 setDefaultScene();
             }
             @Override protected void failed() {
                 super.failed();
-                new Dialog(Alert.AlertType.ERROR, "Task failed", null, "Task failed").showAndWait();
+                new Dialog(Alert.AlertType.ERROR, "Task failed", "Task failed", "Calibration data is incorrect").showAndWait();
                 setDefaultScene();
             }
         };
         setScene(new LoadingScene(defaultScene, task));
         new Thread(task).start();
+    }
+
+    private void updateTable(TrainingDataPosition[] trainingDataPositions) {
+        data = FXCollections.observableArrayList();
+        for (TrainingDataPosition trainingDataPosition : trainingDataPositions)
+            data.add(new CalibrationTrainingDataPosition(trainingDataPosition));
+        trainingDataPositionTable.setItems(data);
     }
 
     @FXML

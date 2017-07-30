@@ -21,10 +21,10 @@ public class NormalizerHelper {
         return normalizedArray;
     }
 
-    public double[] realValuesArray(Normalizer[] normalizerArray, double[] normalizeArray){
-        double[] realValuesArray = new double[normalizeArray.length];
-        for(int i=0; i<normalizeArray.length; ++i)
-            realValuesArray[i] = normalizerArray[i].realValue(normalizeArray[i]);
+    public double[] realValuesArray(Normalizer[] normalizerArray, double[] normalizedArray){
+        double[] realValuesArray = new double[normalizedArray.length];
+        for(int i=0; i<normalizedArray.length; ++i)
+            realValuesArray[i] = normalizerArray[i].realValue(normalizedArray[i]);
         return realValuesArray;
     }
 }

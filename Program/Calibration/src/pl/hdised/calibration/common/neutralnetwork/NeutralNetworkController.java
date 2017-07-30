@@ -4,6 +4,7 @@ import pl.hdised.calibration.common.ArrayHelper;
 import pl.hdised.calibration.common.Normalizer;
 import pl.hdised.calibration.common.NormalizerHelper;
 import pl.hdised.calibration.common.neutralnetwork.model.Net;
+import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataPosition;
 import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataWriter;
 import pl.hdised.calibration.common.neutralnetwork.util.TopologyHelper;
 import java.io.IOException;
@@ -33,43 +34,23 @@ public class NeutralNetworkController {
         }
     }
 
-    public String launchLearning(double[][] inputData, double[][] outputData) throws IOException {
+    public TrainingDataPosition[] launchLearning(double[][] inputData, double[][] outputData) throws IOException {
+        NormalizerHelper normalizerHelper = new NormalizerHelper();
+        ArrayHelper arrayHelper = new ArrayHelper();
         net = new Net(new TopologyHelper().createTopologySchema(inputData.length, outputData.length));
-        int dataSize = new ArrayHelper().minSecondLayerLength(inputData, outputData);
-        StringBuilder stringBuilder = new StringBuilder();
+        TrainingDataPosition[] trainingDataPositions = new TrainingDataPosition[arrayHelper.minSecondLayerLength(inputData, outputData)];
         inputNormalizers = new NormalizerHelper().createNormalizersForArray(inputData);
         outputNormalizers = new NormalizerHelper().createNormalizersForArray(outputData);
 
-        int trainingPass = 0;
-        while (trainingPass < dataSize) {
-            stringBuilder.append("Pass: ").append(trainingPass+1).append("\t-\tInputs:");
-            double[] inputValues = new double[inputData.length];
-            for(int i=0; i<inputData.length; ++i)
-                inputValues[i] = inputNormalizers[i].normalize(inputData[i][trainingPass]);
-            for (double value : inputValues)
-                stringBuilder.append(' ').append(value);
-            net.feedForward(inputValues);
-            stringBuilder.append("\tResults:");
-            double[] resultValues = net.getResults();
-            for (double value : resultValues)
-                stringBuilder.append(' ').append(value);
-            stringBuilder.append("\tResults normalized:");
-            for(int i=0; i<resultValues.length; ++i)
-                resultValues[i] = outputNormalizers[i].realValue(resultValues[i]);
-            for (double value : resultValues)
-                stringBuilder.append(' ').append(value);
-            stringBuilder.append("\tTargets:");
-            double[] targetValues = new double[outputData.length];
-            for(int i=0; i<outputData.length; ++i)
-                targetValues[i] = outputNormalizers[i].normalize(outputData[i][trainingPass]);
-            for (double value : targetValues)
-                stringBuilder.append(' ').append(value);
-            net.backPropagtion(targetValues);
-            double error = net.getRecentAverageError();
-            stringBuilder.append("\tNet recent average error: ").append(error).append("\n");
-            trainingPass++;
+        for(int i=0; i<trainingDataPositions.length; ++i){
+            TrainingDataPosition trainingDataPosition = new TrainingDataPosition(i+1, arrayHelper.getColumn(inputData, i), arrayHelper.getColumn(outputData, i));
+            net.feedForward(normalizerHelper.normalizeArray(inputNormalizers, trainingDataPosition.getInputValues()));
+            trainingDataPosition.setResultValues(normalizerHelper.realValuesArray(outputNormalizers, net.getResults()));
+            net.backPropagtion(normalizerHelper.normalizeArray(outputNormalizers, trainingDataPosition.getTargetValues()));
+            trainingDataPosition.setError(net.getRecentAverageError());
+            trainingDataPositions[i]=trainingDataPosition;
         }
-        return stringBuilder.toString();
+        return trainingDataPositions;
     }
 
     public double[] test(double[] inputValues){

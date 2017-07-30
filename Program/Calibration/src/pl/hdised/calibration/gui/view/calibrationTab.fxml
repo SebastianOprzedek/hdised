@@ -4,10 +4,50 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="439.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <TextArea fx:id="textArea" editable="false" layoutX="10.0" layoutY="78.0" prefHeight="257.0" prefWidth="480.0"/>
+        <TableView fx:id="trainingDataPositionTable" layoutX="10.0" layoutY="78.0" prefHeight="257.0" prefWidth="480.0">
+            <columns>
+                <TableColumn fx:id="passNumberColumn" prefWidth="48.0" text="pass">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="passNumber"/>
+                    </cellValueFactory>
+                    <cellFactory/>
+                </TableColumn>
+                <TableColumn fx:id="tankIdColumn" prefWidth="40.0" text="tank Id">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="tankId"/>
+                    </cellValueFactory>
+                    <cellFactory/>
+                </TableColumn>
+                <TableColumn fx:id="fuelHeightColumn" prefWidth="60.0" text="fuel height">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="fuelHeight"/>
+                    </cellValueFactory>
+                    <cellFactory/>
+                </TableColumn>
+                <TableColumn fx:id="fuelVolumeColumn" prefWidth="60.0" text="fuel volume">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="fuelVolume"/>
+                    </cellValueFactory>
+                    <cellFactory/>
+                </TableColumn>
+                <TableColumn fx:id="resultFuelVolumeColumn" prefWidth="130.0" text="result volume">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="resultFuelVolume"/>
+                    </cellValueFactory>
+                    <cellFactory/>
+                </TableColumn>
+                <TableColumn fx:id="errorColumn" prefWidth="130.0" text="error">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="error"/>
+                    </cellValueFactory>
+                    <cellFactory/>
+                </TableColumn>
+            </columns>
+        </TableView>
         <Button fx:id="trainButton" layoutX="197.0" layoutY="28.0" mnemonicParsing="false" onAction="#train"
                 prefHeight="34.0" prefWidth="107.0" text="Launch learning"/>
         <TextField fx:id="tankId" layoutX="30.0" layoutY="404.0" maxWidth="-Infinity" minWidth="-Infinity"
