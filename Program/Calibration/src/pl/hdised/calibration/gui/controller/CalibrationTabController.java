@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import pl.hdised.calibration.common.gui.fx.dialog.Dialog;
 import pl.hdised.calibration.common.gui.fx.scene.LoadingScene;
 import pl.hdised.calibration.common.gui.fx.util.SceneSwitcher;
@@ -19,25 +20,29 @@ import java.io.IOException;
  */
 public class CalibrationTabController extends SceneSwitcher {
     private MainSceneController mainController;
+    private NeutralNetworkController neutralNetworkController;
     @FXML
     private TextArea textArea;
+    @FXML
+    private TextField tankId;
+    @FXML
+    private TextField fuelHeight;
+    @FXML
+    private TextField fuelVolume;
 
     public CalibrationTabController(Scene defaultScene, MainSceneController tabController){
         super(defaultScene);
         this.mainController = tabController;
+        neutralNetworkController = new NeutralNetworkController();
     }
 
     @FXML
     protected void train(ActionEvent event) throws IOException {
-        final NeutralNetworkController neutralNetworkController = new NeutralNetworkController();
         Task task = new Task<String>() {
             protected String call() throws IOException {
-                double[][] inputData = new double[2][];
-                double[][] outputData = new double[1][];
                 CalibrationData calibrationData = mainController.getCalibrationData();
-                inputData[0] = calibrationData.getTankIds();
-                inputData[1] = calibrationData.getFuelHeights();
-                outputData[0] = calibrationData.getFuelVolumes();
+                double[][] inputData = {calibrationData.getTankIds(), calibrationData.getFuelHeights()};
+                double[][] outputData = {calibrationData.getFuelVolumes()};
                 return neutralNetworkController.launchLearning(inputData, outputData);
             }
             @Override protected void cancelled() {
@@ -62,6 +67,7 @@ public class CalibrationTabController extends SceneSwitcher {
 
     @FXML
     protected void test(ActionEvent event) throws IOException {
+        double[] inputValues = { Double.parseDouble(tankId.getText()), Double.parseDouble(fuelHeight.getText())};
+        fuelVolume.setText(Double.toString(neutralNetworkController.test(inputValues)[0]));
     }
-
 }

@@ -14,4 +14,17 @@ public class NormalizerHelper {
         return normalizers;
     }
 
+    public double[] normalizeArray(Normalizer[] normalizerArray, double[] realArray){
+        double[] normalizedArray = new double[realArray.length];
+        for(int i=0; i<realArray.length; ++i)
+            normalizedArray[i] = normalizerArray[i].normalize(realArray[i]);
+        return normalizedArray;
+    }
+
+    public double[] realValuesArray(Normalizer[] normalizerArray, double[] normalizeArray){
+        double[] realValuesArray = new double[normalizeArray.length];
+        for(int i=0; i<normalizeArray.length; ++i)
+            realValuesArray[i] = normalizerArray[i].realValue(normalizeArray[i]);
+        return realValuesArray;
+    }
 }

@@ -4,7 +4,6 @@ import pl.hdised.calibration.common.ArrayHelper;
 import pl.hdised.calibration.common.Normalizer;
 import pl.hdised.calibration.common.NormalizerHelper;
 import pl.hdised.calibration.common.neutralnetwork.model.Net;
-import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataReader;
 import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataWriter;
 import pl.hdised.calibration.common.neutralnetwork.util.TopologyHelper;
 import java.io.IOException;
@@ -13,6 +12,9 @@ import java.io.IOException;
  * Created by Sebastian Oprzędek on 18.07.2017.
  */
 public class NeutralNetworkController {
+    private Net net;
+    private Normalizer[] inputNormalizers;
+    private Normalizer[] outputNormalizers;
 
     public void writeTrainingData(double[][] inputs, double[][] outputs) throws IOException {
         TrainingDataWriter trainingDataWriter = new TrainingDataWriter("trainingData.txt");
@@ -31,43 +33,12 @@ public class NeutralNetworkController {
         }
     }
 
-    public String launchLearningFromFile() throws IOException {
-        TrainingDataReader trainingDataReader = new TrainingDataReader("trainingData.txt");
-        StringBuilder stringBuilder = new StringBuilder();
-        int[] topologySchema = trainingDataReader.getTopology();
-        Net net = new Net(topologySchema);
-
-        int trainingPass = 0;
-        while (trainingDataReader.isEof()) {
-            stringBuilder.append("Pass: ").append(++trainingPass).append("\t-\tInputs:");
-            double[] inputValues = trainingDataReader.readValues();
-            for (double value : inputValues)
-                stringBuilder.append(' ').append(value);
-            net.feedForward(inputValues); //TODO: normalize values
-            stringBuilder.append("\tResults:");
-            double[] resultValues = net.getResults();
-            for (double value : resultValues)
-                stringBuilder.append(' ').append(value);
-            stringBuilder.append("\tTargets:");
-            double[] targetValues = trainingDataReader.readValues();
-            for (double value : targetValues)
-                stringBuilder.append(' ').append(value);
-            net.backPropagtion(targetValues);
-
-            double error = net.getRecentAverageError();
-            stringBuilder.append("\tNet recent average error: ").append(error).append("\n");
-        }
-//        net.save("net.txt");
-    return stringBuilder.toString();
-    }
-
     public String launchLearning(double[][] inputData, double[][] outputData) throws IOException {
+        net = new Net(new TopologyHelper().createTopologySchema(inputData.length, outputData.length));
         int dataSize = new ArrayHelper().minSecondLayerLength(inputData, outputData);
         StringBuilder stringBuilder = new StringBuilder();
-        int[] topologySchema = new TopologyHelper().createTopologySchema(inputData.length, outputData.length);
-        Net net = new Net(topologySchema);
-        Normalizer[] inputNormalizers = new NormalizerHelper().createNormalizersForArray(inputData);
-        Normalizer[] outputNormalizers = new NormalizerHelper().createNormalizersForArray(outputData);
+        inputNormalizers = new NormalizerHelper().createNormalizersForArray(inputData);
+        outputNormalizers = new NormalizerHelper().createNormalizersForArray(outputData);
 
         int trainingPass = 0;
         while (trainingPass < dataSize) {
@@ -99,5 +70,11 @@ public class NeutralNetworkController {
             trainingPass++;
         }
         return stringBuilder.toString();
+    }
+
+    public double[] test(double[] inputValues){
+        NormalizerHelper normalizerHelper = new NormalizerHelper();
+        net.feedForward(normalizerHelper.normalizeArray(inputNormalizers, inputValues));
+        return normalizerHelper.realValuesArray(outputNormalizers, net.getResults());
     }
 }
