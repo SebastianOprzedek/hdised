@@ -6,9 +6,9 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
-import pl.hdised.calibration.common.gui.fx.dialog.CancelInformationDialog;
-import pl.hdised.calibration.common.gui.fx.dialog.WrongFilesDialogError;
+import pl.hdised.calibration.common.gui.fx.dialog.Dialog;
 import pl.hdised.calibration.common.neutralnetwork.NeutralNetworkController;
 import pl.hdised.calibration.common.resourcehelper.ResourceHelper;
 import pl.hdised.calibration.model.FilePosition;
@@ -67,7 +67,7 @@ public class ReadingDataTabController extends SceneSwitcher {
             }
             @Override protected void cancelled() {
                 super.cancelled();
-                new CancelInformationDialog().showAndWait();
+                new Dialog(Alert.AlertType.INFORMATION, "Task cancelled", null, "Task cancelled").showAndWait();
                 setDefaultScene();
             }
             @Override protected void succeeded() {
@@ -77,7 +77,7 @@ public class ReadingDataTabController extends SceneSwitcher {
             }
             @Override protected void failed() {
                 super.failed();
-                new WrongFilesDialogError().showAndWait();
+                new Dialog(Alert.AlertType.ERROR, "Task failed", "Task failed", "Input files are incorrect").showAndWait();
                 setDefaultScene();
             }
         };

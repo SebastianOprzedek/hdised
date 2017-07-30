@@ -13,8 +13,6 @@ import java.io.IOException;
  * Created by Sebastian Oprzędek on 18.07.2017.
  */
 public class NeutralNetworkController {
-    public NeutralNetworkController() {
-    }
 
     public void writeTrainingData(double[][] inputs, double[][] outputs) throws IOException {
         TrainingDataWriter trainingDataWriter = new TrainingDataWriter("trainingData.txt");
