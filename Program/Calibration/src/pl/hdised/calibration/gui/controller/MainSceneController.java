@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import pl.hdised.calibration.model.CalibrationData;
+import weka.core.converters.C45Saver;
+
 import java.io.IOException;
 
 public class MainSceneController{
@@ -16,8 +18,11 @@ public class MainSceneController{
     private Tab readingDataTab;
     private ReadingDataTabController readingDataTabController;
     @FXML
-    private Tab calibrationTab;
+    private Tab neuralNetworkTab;
     private NeuralNetworkTabController neuralNetworkTabController;
+    @FXML
+    private Tab machineLearningTab;
+    private MachineLearningTabController machineLearningTabController;
     @FXML
     private Tab showDataTab;
     private ShowDataTabController showDataTabController;
@@ -30,7 +35,11 @@ public class MainSceneController{
 
         loader = new FXMLLoader(getClass().getResource("../view/neuralNetworkTab.fxml"));
         loader.setController(neuralNetworkTabController = new NeuralNetworkTabController(defaultScene,this));
-        calibrationTab.setContent(loader.load());
+        neuralNetworkTab.setContent(loader.load());
+
+        loader = new FXMLLoader(getClass().getResource("../view/machineLearningTab.fxml"));
+        loader.setController(machineLearningTabController = new MachineLearningTabController(defaultScene,this));
+        machineLearningTab.setContent(loader.load());
 
         loader = new FXMLLoader(getClass().getResource("../view/showDataTab.fxml"));
         loader.setController(showDataTabController = new ShowDataTabController(this));
@@ -54,8 +63,12 @@ public class MainSceneController{
         tabPane.getSelectionModel().select(readingDataTab);
     }
 
-    public void setCalibrationTab(){
-        tabPane.getSelectionModel().select(calibrationTab);
+    public void setNeuralNetworkTab(){
+        tabPane.getSelectionModel().select(neuralNetworkTab);
+    }
+
+    public void setMachineLearningTab(){
+        tabPane.getSelectionModel().select(neuralNetworkTab);
     }
 
     public void setShowDataTab(CalibrationData calibrationData){

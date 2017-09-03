@@ -11,7 +11,8 @@
             <tabs>
                 <Tab fx:id="readingDataTab" text="Read data"/>
                 <Tab fx:id="showDataTab" text="Show data"/>
-                <Tab fx:id="calibrationTab" text="Calibration"/>
+                <Tab fx:id="neuralNetworkTab" text="Neutral network"/>
+                <Tab fx:id="machineLearningTab" text="Machine learning"/>
             </tabs>
         </TabPane>
     </children>
