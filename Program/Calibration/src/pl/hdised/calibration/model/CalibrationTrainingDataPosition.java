@@ -1,6 +1,6 @@
 package pl.hdised.calibration.model;
 
-import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataPosition;
+import pl.hdised.calibration.common.neuralnetwork.model.TrainingDataPosition;
 
 /**
  * Created by Sebastian Oprzędek on 30.07.2017.

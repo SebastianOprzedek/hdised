@@ -1,4 +1,4 @@
-package pl.hdised.calibration.common.neutralnetwork.model;
+package pl.hdised.calibration.common.neuralnetwork.model;
 
 import java.io.*;
 import java.util.Scanner;

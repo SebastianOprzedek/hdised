@@ -17,7 +17,7 @@ public class MainSceneController{
     private ReadingDataTabController readingDataTabController;
     @FXML
     private Tab calibrationTab;
-    private CalibrationTabController calibrationTabController;
+    private NeuralNetworkTabController neuralNetworkTabController;
     @FXML
     private Tab showDataTab;
     private ShowDataTabController showDataTabController;
@@ -28,8 +28,8 @@ public class MainSceneController{
         loader.setController(readingDataTabController = new ReadingDataTabController(defaultScene, this));
         readingDataTab.setContent(loader.load());
 
-        loader = new FXMLLoader(getClass().getResource("../view/calibrationTab.fxml"));
-        loader.setController(calibrationTabController = new CalibrationTabController(defaultScene,this));
+        loader = new FXMLLoader(getClass().getResource("../view/neuralNetworkTab.fxml"));
+        loader.setController(neuralNetworkTabController = new NeuralNetworkTabController(defaultScene,this));
         calibrationTab.setContent(loader.load());
 
         loader = new FXMLLoader(getClass().getResource("../view/showDataTab.fxml"));

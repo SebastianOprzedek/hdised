@@ -1,18 +1,18 @@
-package pl.hdised.calibration.common.neutralnetwork;
+package pl.hdised.calibration.common.neuralnetwork;
 
 import pl.hdised.calibration.common.ArrayHelper;
 import pl.hdised.calibration.common.Normalizer;
 import pl.hdised.calibration.common.NormalizerHelper;
-import pl.hdised.calibration.common.neutralnetwork.model.Net;
-import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataPosition;
-import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataWriter;
-import pl.hdised.calibration.common.neutralnetwork.util.TopologyHelper;
+import pl.hdised.calibration.common.neuralnetwork.model.Net;
+import pl.hdised.calibration.common.neuralnetwork.model.TrainingDataPosition;
+import pl.hdised.calibration.common.neuralnetwork.model.TrainingDataWriter;
+import pl.hdised.calibration.common.neuralnetwork.util.TopologyHelper;
 import java.io.IOException;
 
 /**
  * Created by Sebastian Oprzędek on 18.07.2017.
  */
-public class NeutralNetworkController {
+public class NeuralNetworkController {
     private Net net;
     private Normalizer[] inputNormalizers;
     private Normalizer[] outputNormalizers;

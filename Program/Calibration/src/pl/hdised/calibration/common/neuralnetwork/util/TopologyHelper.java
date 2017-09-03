@@ -1,6 +1,6 @@
-package pl.hdised.calibration.common.neutralnetwork.util;
+package pl.hdised.calibration.common.neuralnetwork.util;
 
-import pl.hdised.calibration.common.neutralnetwork.model.Neuron;
+import pl.hdised.calibration.common.neuralnetwork.model.Neuron;
 
 /**
  * Created by Sebastian Oprzędek on 18.07.2017.

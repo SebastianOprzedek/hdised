@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import pl.hdised.calibration.common.gui.fx.dialog.Dialog;
-import pl.hdised.calibration.common.neutralnetwork.NeutralNetworkController;
+import pl.hdised.calibration.common.neuralnetwork.NeuralNetworkController;
 import pl.hdised.calibration.common.resourcehelper.ResourceHelper;
 import pl.hdised.calibration.model.FilePosition;
 import pl.hdised.calibration.common.gui.fx.scene.LoadingScene;
@@ -57,7 +57,7 @@ public class ReadingDataTabController extends SceneSwitcher {
         final CalibrationData calibrationData = new CalibrationData();
         Task task = new Task<String>() {
             protected String call() throws IOException {
-                NeutralNetworkController neutralNetworkController = new NeutralNetworkController();
+                NeuralNetworkController neuralNetworkController = new NeuralNetworkController();
                 StringBuilder input = new StringBuilder();
                 for(Object item : filesTable.getItems())
                     if (((FilePosition) item).getChecked())

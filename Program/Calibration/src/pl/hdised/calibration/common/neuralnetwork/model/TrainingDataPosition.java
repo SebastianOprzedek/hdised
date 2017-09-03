@@ -1,4 +1,4 @@
-package pl.hdised.calibration.common.neutralnetwork.model;
+package pl.hdised.calibration.common.neuralnetwork.model;
 
 /**
  * Created by Sebastian Oprzędek on 30.07.2017.

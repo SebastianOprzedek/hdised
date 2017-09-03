@@ -1,6 +1,6 @@
-package pl.hdised.calibration.common.neutralnetwork.model;
+package pl.hdised.calibration.common.neuralnetwork.model;
 
-import pl.hdised.calibration.common.neutralnetwork.util.TopologyHelper;
+import pl.hdised.calibration.common.neuralnetwork.util.TopologyHelper;
 import java.lang.Math;
 
 /**

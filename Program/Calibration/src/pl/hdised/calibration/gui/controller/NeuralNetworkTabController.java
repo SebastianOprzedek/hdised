@@ -8,13 +8,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import pl.hdised.calibration.common.gui.fx.dialog.Dialog;
 import pl.hdised.calibration.common.gui.fx.scene.LoadingScene;
 import pl.hdised.calibration.common.gui.fx.util.SceneSwitcher;
-import pl.hdised.calibration.common.neutralnetwork.NeutralNetworkController;
-import pl.hdised.calibration.common.neutralnetwork.model.TrainingDataPosition;
+import pl.hdised.calibration.common.neuralnetwork.NeuralNetworkController;
+import pl.hdised.calibration.common.neuralnetwork.model.TrainingDataPosition;
 import pl.hdised.calibration.model.CalibrationData;
 import pl.hdised.calibration.model.CalibrationTrainingDataPosition;
 
@@ -23,9 +22,9 @@ import java.io.IOException;
 /**
  * Created by Sebastian Oprzędek on 16.07.2017.
  */
-public class CalibrationTabController extends SceneSwitcher {
+public class NeuralNetworkTabController extends SceneSwitcher {
     private MainSceneController mainController;
-    private NeutralNetworkController neutralNetworkController;
+    private NeuralNetworkController neuralNetworkController;
     private ObservableList<CalibrationTrainingDataPosition> data;
     @FXML
     private TextField tankId;
@@ -36,10 +35,10 @@ public class CalibrationTabController extends SceneSwitcher {
     @FXML
     private TableView trainingDataPositionTable;
 
-    public CalibrationTabController(Scene defaultScene, MainSceneController tabController){
+    public NeuralNetworkTabController(Scene defaultScene, MainSceneController tabController){
         super(defaultScene);
         this.mainController = tabController;
-        neutralNetworkController = new NeutralNetworkController();
+        neuralNetworkController = new NeuralNetworkController();
     }
 
     @FXML
@@ -56,7 +55,7 @@ public class CalibrationTabController extends SceneSwitcher {
                 CalibrationData calibrationData = mainController.getCalibrationData();
                 double[][] inputData = {calibrationData.getTankIds(), calibrationData.getFuelHeights()};
                 double[][] outputData = {calibrationData.getFuelVolumes()};
-                return neutralNetworkController.launchLearning(inputData, outputData);
+                return neuralNetworkController.launchLearning(inputData, outputData);
             }
             @Override protected void cancelled() {
                 super.cancelled();
@@ -88,6 +87,6 @@ public class CalibrationTabController extends SceneSwitcher {
     @FXML
     protected void test(ActionEvent event) throws IOException {
         double[] inputValues = { Double.parseDouble(tankId.getText()), Double.parseDouble(fuelHeight.getText())};
-        fuelVolume.setText(Double.toString(neutralNetworkController.test(inputValues)[0]));
+        fuelVolume.setText(Double.toString(neuralNetworkController.test(inputValues)[0]));
     }
 }
