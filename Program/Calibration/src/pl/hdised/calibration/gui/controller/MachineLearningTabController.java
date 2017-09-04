@@ -1,11 +1,15 @@
 package pl.hdised.calibration.gui.controller;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import pl.hdised.calibration.common.gui.fx.util.SceneSwitcher;
 import pl.hdised.calibration.model.CalibrationData;
+import pl.hdised.calibration.util.algorithm.ClassifierCreator;
 import weka.classifiers.Evaluation;
 import weka.classifiers.rules.ZeroR;
 import weka.core.Attribute;
@@ -22,7 +26,8 @@ public class MachineLearningTabController extends SceneSwitcher {
     private CalibrationData trainingData;
     private CalibrationData testData;
     private ArrayList<Attribute> attributeList;
-
+    @FXML
+    private ComboBox comboBox;
     @FXML
     private TextArea textArea;
 
@@ -37,6 +42,8 @@ public class MachineLearningTabController extends SceneSwitcher {
         attributeList.add(new Attribute("tankId"));
         attributeList.add(new Attribute("fuelHeight"));
         attributeList.add(new Attribute("fuelVolume"));
+
+        comboBox.setItems(FXCollections.observableArrayList(new ClassifierCreator().getNames()));
     }
 
     @FXML

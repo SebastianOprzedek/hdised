@@ -14,13 +14,84 @@ import weka.classifiers.rules.*;
 import weka.classifiers.trees.*;
 import weka.classifiers.trees.lmt.LogisticBase;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by Sebastian Oprzędek on 04.09.2017.
  */
 public class ClassifierCreator {
 
-    public Classifier createClassifier(int index) throws Exception{
-        switch (index){
+    private static final Map<Integer, String> names;
+
+    static{
+        names = new HashMap<Integer, String>();
+        names.put(0, "AdaBoostM1");
+        names.put(1, "AdditiveRegression");
+        names.put(2, "AttributeSelectedClassifier");
+        names.put(3, "Bagging");
+        names.put(4, "BayesNet");
+        names.put(5, "BayesNetGenerator");
+        names.put(6, "BIFReader");
+        names.put(7, "ClassificationViaRegression");
+        names.put(8, "CostSensitiveClassifier");
+        names.put(9, "CVParameterSelection");
+        names.put(10, "DecisionStump");
+        names.put(11, "DecisionTable");
+        names.put(12, "EditableBayesNet");
+        names.put(13, "FilteredClassifier");
+        names.put(14, "GaussianProcesses");
+        names.put(16, "HoeffdingTree");
+        names.put(17, "IBk");
+        names.put(18, "InputMappedClassifier");
+        names.put(20, "IterativeClassifierOptimizer");
+        names.put(21, "J48");
+        names.put(22, "JRip");
+        names.put(23, "KStar");
+        names.put(24, "LinearRegression");
+        names.put(25, "LMT");
+        names.put(27, "Logistic");
+        names.put(28, "LogisticBase");
+        names.put(29, "LogitBoost");
+        names.put(30, "LWL");
+        names.put(32, "M5P");
+        names.put(33, "M5Rules");
+        names.put(34, "MultiClassClassifier");
+        names.put(35, "MultiClassClassifierUpdateable");
+        names.put(36, "MultilayerPerceptron");
+        names.put(38, "MultiScheme");
+        names.put(39, "NaiveBayes");
+        names.put(40, "NaiveBayesMultinomial");
+        names.put(41, "NaiveBayesMultinomialText");
+        names.put(42, "NaiveBayesMultinomialUpdateable");
+        names.put(43, "NaiveBayesUpdateable");
+        names.put(45, "OneR");
+        names.put(48, "PART");
+        names.put(51, "RandomCommittee");
+        names.put(52, "RandomForest");
+        names.put(54, "RandomizableFilteredClassifier");
+        names.put(60, "RandomSubSpace");
+        names.put(61, "RandomTree");
+        names.put(63, "RegressionByDiscretization");
+        names.put(64, "REPTree");
+        names.put(67, "SerializedClassifier");
+        names.put(68, "SGD");
+        names.put(69, "SGDText");
+        names.put(70, "SimpleLinearRegression");
+        names.put(71, "SimpleLogistic");
+        names.put(73, "SMO");
+        names.put(74, "SMOreg");
+        names.put(75, "Stacking");
+        names.put(78, "Vote");
+        names.put(79, "VotedPerceptron");
+        names.put(80, "WeightedInstancesHandlerWrapper");
+        names.put(81, "ZeroR");
+    }
+
+    public Classifier createClassifier(int index) throws Exception {
+        switch (index) {
             case 0: return new AdaBoostM1();
             case 1: return new AdditiveRegression();
             case 2: return new AttributeSelectedClassifier();
@@ -84,70 +155,12 @@ public class ClassifierCreator {
         }
     }
 
-    public String getClassifierName(int index){
-        switch (index){
-            case 0: return "AdaBoostM1";
-            case 1: return "AdditiveRegression";
-            case 2: return "AttributeSelectedClassifier";
-            case 3: return "Bagging";
-            case 4: return "BayesNet";
-            case 5: return "BayesNetGenerator";
-            case 6: return "BIFReader";
-            case 7: return "ClassificationViaRegression";
-            case 8: return "CostSensitiveClassifier";
-            case 9: return "CVParameterSelection";
-            case 10: return "DecisionStump";
-            case 11: return "DecisionTable";
-            case 12: return "EditableBayesNet";
-            case 13: return "FilteredClassifier";
-            case 14: return "GaussianProcesses";
-            case 16: return "HoeffdingTree";
-            case 17: return "IBk";
-            case 18: return "InputMappedClassifier";
-            case 20: return "IterativeClassifierOptimizer";
-            case 21: return "J48";
-            case 22: return "JRip";
-            case 23: return "KStar";
-            case 24: return "LinearRegression";
-            case 25: return "LMT";
-            case 27: return "Logistic";
-            case 28: return "LogisticBase";
-            case 29: return "LogitBoost";
-            case 30: return "LWL";
-            case 32: return "M5P";
-            case 33: return "M5Rules";
-            case 34: return "MultiClassClassifier";
-            case 35: return "MultiClassClassifierUpdateable";
-            case 36: return "MultilayerPerceptron";
-            case 38: return "MultiScheme";
-            case 39: return "NaiveBayes";
-            case 40: return "NaiveBayesMultinomial";
-            case 41: return "NaiveBayesMultinomialText";
-            case 42: return "NaiveBayesMultinomialUpdateable";
-            case 43: return "NaiveBayesUpdateable";
-            case 45: return "OneR";
-            case 48: return "PART";
-            case 51: return "RandomCommittee";
-            case 52: return "RandomForest";
-            case 54: return "RandomizableFilteredClassifier";
-            case 60: return "RandomSubSpace";
-            case 61: return "RandomTree";
-            case 63: return "RegressionByDiscretization";
-            case 64: return "REPTree";
-            case 67: return "SerializedClassifier";
-            case 68: return "SGD";
-            case 69: return "SGDText";
-            case 70: return "SimpleLinearRegression";
-            case 71: return "SimpleLogistic";
-            case 73: return "SMO";
-            case 74: return "SMOreg";
-            case 75: return "Stacking";
-            case 78: return "Vote";
-            case 79: return "VotedPerceptron";
-            case 80: return "WeightedInstancesHandlerWrapper";
-            case 81: return "ZeroR";
-            default: return null;
+    public List<String> getNames(){
+        List<String> strings = new ArrayList<>();
+        for(int i=0; i<names.keySet().size(); i++){
+            if(names.get(i)!=null)
+            strings.add(names.get(i));
         }
+        return strings;
     }
-
 }
