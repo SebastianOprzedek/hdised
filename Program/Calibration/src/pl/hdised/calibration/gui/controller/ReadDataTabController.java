@@ -16,18 +16,21 @@ import pl.hdised.calibration.common.gui.fx.scene.LoadingScene;
 import pl.hdised.calibration.common.gui.fx.util.SceneSwitcher;
 import pl.hdised.calibration.model.CalibrationData;
 import pl.hdised.calibration.input.TankMeasuresMeasuresInputReader;
+import pl.hdised.calibration.util.function.DataSetterFunction;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * Created by Sebastian Oprzędek on 16.07.2017.
  */
-public class ReadingDataTabController extends SceneSwitcher {
+public class ReadDataTabController extends SceneSwitcher {
     private MainSceneController mainController;
     @FXML
     private TableView filesTable;
+    DataSetterFunction dataSetterFunction;
 
     private List<String> filenameList = new ArrayList<String>(){{
         ResourceHelper resourceHelper = new ResourceHelper();
@@ -39,9 +42,10 @@ public class ReadingDataTabController extends SceneSwitcher {
         add(resourceHelper.get("DeformedTankMeasures3"));
     }};
 
-    ReadingDataTabController(Scene defaultScene, MainSceneController tabController) {
+    ReadDataTabController(Scene defaultScene, MainSceneController tabController, DataSetterFunction dataSetterFunction) {
         super(defaultScene);
         this.mainController = tabController;
+        this.dataSetterFunction = dataSetterFunction;
     }
 
     @FXML
@@ -62,7 +66,7 @@ public class ReadingDataTabController extends SceneSwitcher {
                 for(Object item : filesTable.getItems())
                     if (((FilePosition) item).getChecked())
                         calibrationData.append(new TankMeasuresMeasuresInputReader(((FilePosition) item).getFilename()).getData());
-                calibrationData.writeDataToFile("calibrationData.txt");
+//                calibrationData.writeDataToFile("calibrationData.txt");
                 return input.toString();
             }
             @Override protected void cancelled() {
@@ -72,7 +76,10 @@ public class ReadingDataTabController extends SceneSwitcher {
             }
             @Override protected void succeeded() {
                 super.succeeded();
-                mainController.setShowDataTab(calibrationData);
+                try {
+                    dataSetterFunction.callWithParameter(calibrationData);
+                }
+                catch (Exception ex){ex.printStackTrace();}
                 setDefaultScene();
             }
             @Override protected void failed() {

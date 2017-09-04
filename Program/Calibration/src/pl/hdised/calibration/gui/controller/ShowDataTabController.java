@@ -7,6 +7,8 @@ import javafx.scene.control.TableView;
 import pl.hdised.calibration.model.CalibrationData;
 import pl.hdised.calibration.model.CalibrationDataPosition;
 
+import java.util.concurrent.Callable;
+
 /**
  * Created by Sebastian Oprzędek on 28.07.2017.
  */
@@ -14,17 +16,18 @@ public class ShowDataTabController {
     private MainSceneController mainController;
     @FXML
     private TableView dataTable;
-    private CalibrationData calibrationData;
     ObservableList<CalibrationDataPosition> data;
+    Callable<CalibrationData> getDataFunction;
 
-    public ShowDataTabController(MainSceneController tabController){
+    public ShowDataTabController(MainSceneController tabController, Callable<CalibrationData> getDataFunction){
         this.mainController = tabController;
+        this.getDataFunction = getDataFunction;
     }
 
     @FXML
-    public void initialize(){
+    public void initialize() throws Exception{
         dataTable.setEditable(true);
-        data = FXCollections.observableArrayList(mainController.getCalibrationData().getPositions());
+        data = FXCollections.observableArrayList(getDataFunction.call().getPositions());
         dataTable.setItems(data);
     }
 

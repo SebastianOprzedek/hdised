@@ -39,10 +39,10 @@ public class MachineLearningTabController extends SceneSwitcher {
 
     @FXML
     protected void launch(ActionEvent event) throws Exception {
-        CalibrationData calibrationData = mainController.getCalibrationData();
+        CalibrationData calibrationData = mainController.getTrainingData();
         double[][] inputData = {calibrationData.getTankIds(), calibrationData.getFuelHeights()};
         double[][] outputData = {calibrationData.getFuelVolumes()};
-        ArrayList<Attribute> attributeList = new ArrayList<Attribute>();
+        ArrayList<Attribute> attributeList = new ArrayList<>();
         attributeList.add(new Attribute("tankId"));
         attributeList.add(new Attribute("fuelHeight"));
         attributeList.add(new Attribute("fuelVolume"));
@@ -50,11 +50,11 @@ public class MachineLearningTabController extends SceneSwitcher {
         Instances testInstances = new Instances("testInstances", attributeList, 10);
         instances.setClassIndex(instances.numAttributes() - 1);
         testInstances.setClassIndex(testInstances.numAttributes() - 1);
-        for(int i=0; i<50; i++) {
+        for(int i=0; i<calibrationData.getLength(); i++) {
             Instance inst = new DenseInstance(3);
-            inst.setValue(attributeList.get(0), i);
-            inst.setValue(attributeList.get(1), 2*i);
-            inst.setValue(attributeList.get(2), 3*i);
+            inst.setValue(attributeList.get(0), calibrationData.getForIndex(i).getTankId());
+            inst.setValue(attributeList.get(1), calibrationData.getForIndex(i).getFuelHeight());
+            inst.setValue(attributeList.get(2), calibrationData.getForIndex(i).getFuelVolume());
             instances.add(inst);
         }
         for(int i=0; i<50; i++) {

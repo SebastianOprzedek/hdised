@@ -4,24 +4,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="470.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8"
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="470.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <TableView fx:id="dataTable" layoutX="10.0" layoutY="14.0" prefHeight="445.0" prefWidth="480.0">
+        <TableView fx:id="dataTable" layoutX="10.0" layoutY="14.0" prefHeight="445.0" prefWidth="680.0">
             <columns>
-                <TableColumn fx:id="tankId" prefWidth="118.0" text="tank id">
+                <TableColumn fx:id="tankId" prefWidth="120.0" text="tank id">
                     <cellValueFactory>
                         <PropertyValueFactory property="tankId"/>
                     </cellValueFactory>
                     <cellFactory/>
                 </TableColumn>
-                <TableColumn fx:id="fuelHeight" prefWidth="180.0" text="fuel height">
+                <TableColumn fx:id="fuelHeight" prefWidth="230.0" text="fuel height">
                     <cellValueFactory>
                         <PropertyValueFactory property="fuelHeight"/>
                     </cellValueFactory>
                     <cellFactory/>
                 </TableColumn>
-                <TableColumn fx:id="fuelVolume" prefWidth="180.0" text="fuel volume">
+                <TableColumn fx:id="fuelVolume" prefWidth="230.0" text="fuel volume">
                     <cellValueFactory>
                         <PropertyValueFactory property="fuelVolume"/>
                     </cellValueFactory>

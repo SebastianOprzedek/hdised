@@ -27,12 +27,16 @@ public class CalibrationData {
         bufferedOutputStream.close();
     }
 
-    CalibrationDataPosition getForIndex(int index){
+    public CalibrationDataPosition getForIndex(int index){
         return positions.get(index);
     }
 
     public List<CalibrationDataPosition> getPositions() {
         return positions;
+    }
+
+    public int getLength() {
+        return positions.size();
     }
 
     public double[] getTankIds(){

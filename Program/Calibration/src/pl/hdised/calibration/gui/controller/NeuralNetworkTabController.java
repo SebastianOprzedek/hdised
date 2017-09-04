@@ -52,7 +52,7 @@ public class NeuralNetworkTabController extends SceneSwitcher {
     protected void train(ActionEvent event) throws IOException {
         Task task = new Task<TrainingDataPosition[]>() {
             protected TrainingDataPosition[] call() throws IOException {
-                CalibrationData calibrationData = mainController.getCalibrationData();
+                CalibrationData calibrationData = mainController.getTrainingData();
                 double[][] inputData = {calibrationData.getTankIds(), calibrationData.getFuelHeights()};
                 double[][] outputData = {calibrationData.getFuelVolumes()};
                 return neuralNetworkController.launchLearning(inputData, outputData);
