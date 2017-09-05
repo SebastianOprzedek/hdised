@@ -9,7 +9,6 @@ import weka.classifiers.lazy.KStar;
 import weka.classifiers.lazy.LWL;
 import weka.classifiers.meta.*;
 import weka.classifiers.misc.*;
-import weka.classifiers.pmml.consumer.*;
 import weka.classifiers.rules.*;
 import weka.classifiers.trees.*;
 import weka.classifiers.trees.lmt.LogisticBase;
@@ -27,67 +26,76 @@ public class ClassifierCreator {
     private static final Map<Integer, String> names;
 
     static{
+        // comented out algorithms throw Exceptions
         names = new HashMap<Integer, String>();
-        names.put(0, "AdaBoostM1");
+//        names.put(0, "AdaBoostM1");
         names.put(1, "AdditiveRegression");
-        names.put(2, "AttributeSelectedClassifier");
+//        names.put(2, "AttributeSelectedClassifier");
         names.put(3, "Bagging");
-        names.put(4, "BayesNet");
-        names.put(5, "BayesNetGenerator");
-        names.put(6, "BIFReader");
-        names.put(7, "ClassificationViaRegression");
-        names.put(8, "CostSensitiveClassifier");
+//        names.put(4, "BayesNet");
+//        names.put(5, "BayesNetGenerator");
+//        names.put(6, "BIFReader");
+//        names.put(7, "ClassificationViaRegression");
+//        names.put(8, "CostSensitiveClassifier");
         names.put(9, "CVParameterSelection");
         names.put(10, "DecisionStump");
         names.put(11, "DecisionTable");
-        names.put(12, "EditableBayesNet");
-        names.put(13, "FilteredClassifier");
-        names.put(14, "GaussianProcesses");
-        names.put(16, "HoeffdingTree");
+//        names.put(12, "EditableBayesNet");
+//        names.put(13, "FilteredClassifier");
+//        names.put(14, "GaussianProcesses");
+//        names.put(16, "HoeffdingTree");
         names.put(17, "IBk");
         names.put(18, "InputMappedClassifier");
-        names.put(20, "IterativeClassifierOptimizer");
-        names.put(21, "J48");
-        names.put(22, "JRip");
-        names.put(23, "KStar");
-        names.put(24, "LinearRegression");
-        names.put(25, "LMT");
-        names.put(27, "Logistic");
+//        names.put(20, "IterativeClassifierOptimizer");
+//        names/.put(21, "J48");
+//        names.put(22, "JRip");
+//        names.put(23, "KStar");// too long execution
+//        names.put(24, "LinearRegression");
+//        names.put(25, "LMT");
+//        names.put(27, "Logistic");
         names.put(28, "LogisticBase");
-        names.put(29, "LogitBoost");
-        names.put(30, "LWL");
-        names.put(32, "M5P");
-        names.put(33, "M5Rules");
-        names.put(34, "MultiClassClassifier");
-        names.put(35, "MultiClassClassifierUpdateable");
+//        names.put(29, "LogitBoost");
+//        names.put(30, "LWL");// too long execution
+//        names.put(32, "M5P");//NoClassDefFoundError: no/uib/cipr/matrix/Matrix
+//        names.put(33, "M5Rules"); //NoClassDefFoundError: no/uib/cipr/matrix/Matrix
+//        names.put(34, "MultiClassClassifier");
+//        names.put(35, "MultiClassClassifierUpdateable");
         names.put(36, "MultilayerPerceptron");
         names.put(38, "MultiScheme");
-        names.put(39, "NaiveBayes");
-        names.put(40, "NaiveBayesMultinomial");
-        names.put(41, "NaiveBayesMultinomialText");
-        names.put(42, "NaiveBayesMultinomialUpdateable");
-        names.put(43, "NaiveBayesUpdateable");
-        names.put(45, "OneR");
-        names.put(48, "PART");
+//        names.put(39, "NaiveBayes");
+//        names.put(40, "NaiveBayesMultinomial");
+//        names.put(41, "NaiveBayesMultinomialText");
+//        names.put(42, "NaiveBayesMultinomialUpdateable");
+//        names.put(43, "NaiveBayesUpdateable");
+//        names.put(45, "OneR");
+//        names.put(48, "PART");
         names.put(51, "RandomCommittee");
         names.put(52, "RandomForest");
         names.put(54, "RandomizableFilteredClassifier");
         names.put(60, "RandomSubSpace");
         names.put(61, "RandomTree");
-        names.put(63, "RegressionByDiscretization");
+//        names.put(63, "RegressionByDiscretization"); // too long execution
         names.put(64, "REPTree");
-        names.put(67, "SerializedClassifier");
-        names.put(68, "SGD");
-        names.put(69, "SGDText");
+//        names.put(67, "SerializedClassifier"); // FileNotFoundException ?
+//        names.put(68, "SGD");
+//        names.put(69, "SGDText");
         names.put(70, "SimpleLinearRegression");
-        names.put(71, "SimpleLogistic");
-        names.put(73, "SMO");
-        names.put(74, "SMOreg");
+//        names.put(71, "SimpleLogistic");
+//        names.put(73, "SMO");
+//        names.put(74, "SMOreg");
         names.put(75, "Stacking");
         names.put(78, "Vote");
-        names.put(79, "VotedPerceptron");
+//        names.put(79, "VotedPerceptron");
         names.put(80, "WeightedInstancesHandlerWrapper");
         names.put(81, "ZeroR");
+    }
+
+    public Classifier createClassifier(String className) throws Exception {
+        for(Integer key : names.keySet()) {
+            if(names.get(key)==className)
+                return createClassifier(key);
+        }
+        return null;
     }
 
     public Classifier createClassifier(int index) throws Exception {
@@ -151,13 +159,14 @@ public class ClassifierCreator {
             case 78: return new Vote();
             case 79: return new VotedPerceptron();
             case 80: return new WeightedInstancesHandlerWrapper();
-            default: return new ZeroR();
+            case 81: return new ZeroR();
+            default: return null;
         }
     }
 
     public List<String> getNames(){
         List<String> strings = new ArrayList<>();
-        for(int i=0; i<names.keySet().size(); i++){
+        for(int i=0; i<100; i++){
             if(names.get(i)!=null)
             strings.add(names.get(i));
         }

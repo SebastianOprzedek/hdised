@@ -4,14 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import pl.hdised.calibration.common.gui.fx.util.SceneSwitcher;
 import pl.hdised.calibration.model.CalibrationData;
 import pl.hdised.calibration.util.algorithm.ClassifierCreator;
+import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
-import weka.classifiers.rules.ZeroR;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
@@ -54,11 +53,16 @@ public class MachineLearningTabController extends SceneSwitcher {
         Instances testInstances = new Instances("testInstances", attributeList, testData.getLength());
         setInstances(instances, trainingData);
         setInstances(testInstances, testData);
-        ZeroR tree = new ZeroR();         // new instance of tree
-        tree.buildClassifier(instances);   // build classifier
-        Evaluation eval = new Evaluation(instances);
-        eval.evaluateModel(tree, testInstances);
-        textArea.appendText(eval.toSummaryString("\nResults\n======\n", true));
+//        for(String algorithmName : new ClassifierCreator().getNames()) {
+//            try {
+//                test(algorithmName, instances, testInstances);
+//            }
+//            catch (Exception e){
+//                System.out.println("Error for: " + algorithmName+"\n");
+////                e.printStackTrace();
+//            }
+//        }
+        test((String) comboBox.getValue(), instances, testInstances);
     }
 
     private void setInstances(Instances instances, CalibrationData calibrationData){
@@ -70,6 +74,14 @@ public class MachineLearningTabController extends SceneSwitcher {
             inst.setValue(attributeList.get(2), calibrationData.getForIndex(i).getFuelVolume());
             instances.add(inst);
         }
+    }
+
+    private void test(String algorithm, Instances trainingInstances, Instances testInstances) throws Exception{
+        Classifier tree = new ClassifierCreator().createClassifier(algorithm);
+        tree.buildClassifier(trainingInstances);   // build classifier
+        Evaluation eval = new Evaluation(trainingInstances);
+        eval.evaluateModel(tree, testInstances);
+        textArea.appendText(eval.toSummaryString("\n\n"+algorithm+"\nResults\n======\n", true));
     }
 
 }
