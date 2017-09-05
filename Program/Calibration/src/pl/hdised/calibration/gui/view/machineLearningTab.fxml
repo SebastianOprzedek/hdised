@@ -8,15 +8,17 @@
             xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Label layoutX="30.0" layoutY="40.0" text="Algorithm:"/>
-        <ComboBox fx:id="comboBox" layoutX="115.0" layoutY="33.0" prefWidth="300.0" promptText="Choose algorithm">
+        <ComboBox fx:id="comboBox" layoutX="90.0" layoutY="33.0" prefWidth="300.0" promptText="Choose algorithm">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                 </FXCollections>
             </items>
         </ComboBox>
-        <Button fx:id="button" layoutX="500.0" layoutY="28.0" mnemonicParsing="false" onAction="#launch"
-                prefHeight="34.0" prefWidth="107.0" text="Launch"/>
-        <TextArea fx:id="textArea" layoutX="30.0" layoutY="100.0" maxWidth="-Infinity" minWidth="-Infinity" maxHeight="-Infinity" minHeight="-Infinity"
-                   prefWidth="640.0" prefHeight="350.0"/>
+        <Button fx:id="onlyResultButton" layoutX="430.0" layoutY="28.0" mnemonicParsing="false" onAction="#onlyResult"
+                prefHeight="34.0" prefWidth="107.0" text="Get result"/>
+        <Button fx:id="allDataButton" layoutX="560.0" layoutY="28.0" mnemonicParsing="false" onAction="#allData"
+                prefHeight="34.0" prefWidth="107.0" text="Get all data"/>
+        <TextArea fx:id="textArea" layoutX="20.0" layoutY="80.0" maxWidth="-Infinity" minWidth="-Infinity" maxHeight="-Infinity" minHeight="-Infinity"
+                   prefWidth="660.0" prefHeight="360.0"/>
     </children>
 </AnchorPane>

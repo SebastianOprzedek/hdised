@@ -26,7 +26,7 @@ public class ClassifierCreator {
     private static final Map<Integer, String> names;
 
     static{
-        // comented out algorithms throw Exceptions
+        // comented out algorithms throw Exceptions or need research to use
         names = new HashMap<Integer, String>();
 //        names.put(0, "AdaBoostM1");
         names.put(1, "AdditiveRegression");
@@ -37,15 +37,15 @@ public class ClassifierCreator {
 //        names.put(6, "BIFReader");
 //        names.put(7, "ClassificationViaRegression");
 //        names.put(8, "CostSensitiveClassifier");
-        names.put(9, "CVParameterSelection");
-        names.put(10, "DecisionStump");
+//        names.put(9, "CVParameterSelection"); // returns always 14439,350948
+//        names.put(10, "DecisionStump"); // classify to 9430,522813 or 26824,385271
         names.put(11, "DecisionTable");
 //        names.put(12, "EditableBayesNet");
 //        names.put(13, "FilteredClassifier");
 //        names.put(14, "GaussianProcesses");
 //        names.put(16, "HoeffdingTree");
         names.put(17, "IBk");
-        names.put(18, "InputMappedClassifier");
+//        names.put(18, "InputMappedClassifier"); // returns always 14497,192764
 //        names.put(20, "IterativeClassifierOptimizer");
 //        names/.put(21, "J48");
 //        names.put(22, "JRip");
@@ -53,7 +53,7 @@ public class ClassifierCreator {
 //        names.put(24, "LinearRegression");
 //        names.put(25, "LMT");
 //        names.put(27, "Logistic");
-        names.put(28, "LogisticBase");
+//        names.put(28, "LogisticBase"); // returns always 1.0
 //        names.put(29, "LogitBoost");
 //        names.put(30, "LWL");// too long execution
 //        names.put(32, "M5P");//NoClassDefFoundError: no/uib/cipr/matrix/Matrix
@@ -61,7 +61,7 @@ public class ClassifierCreator {
 //        names.put(34, "MultiClassClassifier");
 //        names.put(35, "MultiClassClassifierUpdateable");
         names.put(36, "MultilayerPerceptron");
-        names.put(38, "MultiScheme");
+//        names.put(38, "MultiScheme"); // returns always 14497,192764
 //        names.put(39, "NaiveBayes");
 //        names.put(40, "NaiveBayesMultinomial");
 //        names.put(41, "NaiveBayesMultinomialText");
@@ -72,22 +72,22 @@ public class ClassifierCreator {
         names.put(51, "RandomCommittee");
         names.put(52, "RandomForest");
         names.put(54, "RandomizableFilteredClassifier");
-        names.put(60, "RandomSubSpace");
+//        names.put(60, "RandomSubSpace"); // classify into groups
         names.put(61, "RandomTree");
 //        names.put(63, "RegressionByDiscretization"); // too long execution
         names.put(64, "REPTree");
 //        names.put(67, "SerializedClassifier"); // FileNotFoundException ?
 //        names.put(68, "SGD");
 //        names.put(69, "SGDText");
-        names.put(70, "SimpleLinearRegression");
+//        names.put(70, "SimpleLinearRegression"); // classify into groups
 //        names.put(71, "SimpleLogistic");
 //        names.put(73, "SMO");
 //        names.put(74, "SMOreg");
-        names.put(75, "Stacking");
-        names.put(78, "Vote");
+//        names.put(75, "Stacking"); // always 144497,l192764
+//        names.put(78, "Vote"); // always 144497,l192764
 //        names.put(79, "VotedPerceptron");
-        names.put(80, "WeightedInstancesHandlerWrapper");
-        names.put(81, "ZeroR");
+//        names.put(80, "WeightedInstancesHandlerWrapper"); // always 144497,l192764
+//        names.put(81, "ZeroR"); // always 144497,l192764
     }
 
     public Classifier createClassifier(String className) throws Exception {

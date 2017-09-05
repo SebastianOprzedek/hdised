@@ -11,14 +11,16 @@ import pl.hdised.calibration.model.CalibrationData;
 import pl.hdised.calibration.util.algorithm.ClassifierCreator;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
+import weka.classifiers.evaluation.Prediction;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
 import weka.core.Instance;
 import weka.core.Instances;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by Sebastian Oprzędek on 16.07.2017.
+ * Created by Sebastian Oprzędek on 03.09.2017.
  */
 public class MachineLearningTabController extends SceneSwitcher {
     private MainSceneController mainController;
@@ -46,23 +48,23 @@ public class MachineLearningTabController extends SceneSwitcher {
     }
 
     @FXML
-    protected void launch(ActionEvent event) throws Exception {
+    protected void onlyResult(ActionEvent event) throws Exception {
+        test(false);
+    }
+
+    @FXML
+    protected void allData(ActionEvent event) throws Exception {
+        test(true);
+    }
+
+    private void test(Boolean allData) throws Exception{
         trainingData = mainController.getTrainingData();
         testData = mainController.getTestData();
         Instances instances = new Instances("instances", attributeList, trainingData.getLength());
         Instances testInstances = new Instances("testInstances", attributeList, testData.getLength());
         setInstances(instances, trainingData);
         setInstances(testInstances, testData);
-//        for(String algorithmName : new ClassifierCreator().getNames()) {
-//            try {
-//                test(algorithmName, instances, testInstances);
-//            }
-//            catch (Exception e){
-//                System.out.println("Error for: " + algorithmName+"\n");
-////                e.printStackTrace();
-//            }
-//        }
-        test((String) comboBox.getValue(), instances, testInstances);
+        printResult((String) comboBox.getValue(), instances, testInstances, allData);
     }
 
     private void setInstances(Instances instances, CalibrationData calibrationData){
@@ -76,12 +78,28 @@ public class MachineLearningTabController extends SceneSwitcher {
         }
     }
 
-    private void test(String algorithm, Instances trainingInstances, Instances testInstances) throws Exception{
+    private void printResult(String algorithm, Instances trainingInstances, Instances testInstances, Boolean allData) throws Exception{
         Classifier tree = new ClassifierCreator().createClassifier(algorithm);
         tree.buildClassifier(trainingInstances);   // build classifier
         Evaluation eval = new Evaluation(trainingInstances);
         eval.evaluateModel(tree, testInstances);
-        textArea.appendText(eval.toSummaryString("\n\n"+algorithm+"\nResults\n======\n", true));
+        textArea.clear();
+        textArea.appendText(eval.toSummaryString(algorithm+"\nResults\n======\n", true));
+        if(allData)
+            textArea.appendText(predictionListToString(eval.predictions()));
+    }
+
+    private String predictionListToString(List<Prediction> predictionList){
+        StringBuilder tmp = new StringBuilder();
+        List<Double> occurred = new ArrayList<>();
+        for(Prediction prediction : predictionList) {
+            if(!occurred.contains(prediction.actual()))
+            {
+                occurred.add(prediction.actual());
+                tmp.append("\nActual: ").append(String.format("%.6f", prediction.actual())).append("\t\tPredicted: ").append(String.format("%.6f", prediction.predicted()));
+            }
+        }
+        return tmp.toString();
     }
 
 }
