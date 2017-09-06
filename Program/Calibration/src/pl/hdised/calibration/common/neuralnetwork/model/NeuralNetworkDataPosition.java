@@ -3,14 +3,14 @@ package pl.hdised.calibration.common.neuralnetwork.model;
 /**
  * Created by Sebastian Oprzędek on 30.07.2017.
  */
-public class TrainingDataPosition {
+public class NeuralNetworkDataPosition {
     private int passNumber;
     private double[] inputValues;
     private double[] resultValues;
     private double[] targetValues;
     private double error;
 
-    public TrainingDataPosition(int passNumber, double[] inputValues, double[] targetValues){
+    public NeuralNetworkDataPosition(int passNumber, double[] inputValues, double[] targetValues){
         this.passNumber = passNumber;
         this.inputValues = inputValues;
         this.targetValues = targetValues;

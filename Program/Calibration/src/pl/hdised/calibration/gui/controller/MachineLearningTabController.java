@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import pl.hdised.calibration.common.gui.fx.util.SceneSwitcher;
+import pl.hdised.calibration.common.neuralnetwork.NeuralNetworkController;
+import pl.hdised.calibration.common.neuralnetwork.model.NeuralNetworkDataPosition;
 import pl.hdised.calibration.model.CalibrationData;
 import pl.hdised.calibration.util.algorithm.ClassifierCreator;
 import weka.classifiers.Classifier;
@@ -44,7 +46,9 @@ public class MachineLearningTabController extends SceneSwitcher {
         attributeList.add(new Attribute("fuelHeight"));
         attributeList.add(new Attribute("fuelVolume"));
 
-        comboBox.setItems(FXCollections.observableArrayList(new ClassifierCreator().getNames()));
+        List<String> list = new ClassifierCreator().getNames();
+        list.add("NeuralNetwork");
+        comboBox.setItems(FXCollections.observableArrayList(list));
     }
 
     @FXML
@@ -60,11 +64,15 @@ public class MachineLearningTabController extends SceneSwitcher {
     private void test(Boolean allData) throws Exception{
         trainingData = mainController.getTrainingData();
         testData = mainController.getTestData();
-        Instances instances = new Instances("instances", attributeList, trainingData.getLength());
-        Instances testInstances = new Instances("testInstances", attributeList, testData.getLength());
-        setInstances(instances, trainingData);
-        setInstances(testInstances, testData);
-        printResult((String) comboBox.getValue(), instances, testInstances, allData);
+        if((String) comboBox.getValue() == "NeuralNetwork")
+            printNeuralNetworkResult(trainingData, testData, allData);
+        else {
+            Instances instances = new Instances("instances", attributeList, trainingData.getLength());
+            Instances testInstances = new Instances("testInstances", attributeList, testData.getLength());
+            setInstances(instances, trainingData);
+            setInstances(testInstances, testData);
+            printMachineLearningResult((String) comboBox.getValue(), instances, testInstances, allData);
+        }
     }
 
     private void setInstances(Instances instances, CalibrationData calibrationData){
@@ -78,7 +86,18 @@ public class MachineLearningTabController extends SceneSwitcher {
         }
     }
 
-    private void printResult(String algorithm, Instances trainingInstances, Instances testInstances, Boolean allData) throws Exception{
+    private void printNeuralNetworkResult(CalibrationData trainingData, CalibrationData testData, Boolean allData) throws Exception{
+        NeuralNetworkController neuralNetworkController = new NeuralNetworkController();
+        CalibrationData calibrationData = mainController.getTrainingData();
+        neuralNetworkController.launchLearning(new double[][] {calibrationData.getTankIds(), calibrationData.getFuelHeights()}, new double[][]{calibrationData.getFuelVolumes()});
+        neuralNetworkController.launchTesting(new double[][] {calibrationData.getTankIds(), calibrationData.getFuelHeights()}, new double[][]{calibrationData.getFuelVolumes()});
+        textArea.clear();
+        textArea.appendText(neuralNetworkController.toSummaryString("NeutralNetwork\nResults\n======\n"));
+        if(allData)
+            textArea.appendText(positionListToString(neuralNetworkController.getTestPositions()));
+    }
+
+    private void printMachineLearningResult(String algorithm, Instances trainingInstances, Instances testInstances, Boolean allData) throws Exception{
         Classifier tree = new ClassifierCreator().createClassifier(algorithm);
         tree.buildClassifier(trainingInstances);   // build classifier
         Evaluation eval = new Evaluation(trainingInstances);
@@ -97,6 +116,19 @@ public class MachineLearningTabController extends SceneSwitcher {
             {
                 occurred.add(prediction.actual());
                 tmp.append("\nActual: ").append(String.format("%.6f", prediction.actual())).append("\t\tPredicted: ").append(String.format("%.6f", prediction.predicted()));
+            }
+        }
+        return tmp.toString();
+    }
+
+    private String positionListToString(NeuralNetworkDataPosition[] positions){
+        StringBuilder tmp = new StringBuilder();
+        List<Double> occurred = new ArrayList<>();
+        for(int i=0; i<positions.length; i++){
+            if(!occurred.contains(positions[i].getTargetValues()[0]))
+            {
+                occurred.add(positions[i].getTargetValues()[0]);
+                tmp.append("\nActual: ").append(String.format("%.6f", positions[i].getTargetValues()[0])).append("\t\tPredicted: ").append(String.format("%.6f", positions[i].getResultValues()[0]));
             }
         }
         return tmp.toString();

@@ -13,7 +13,7 @@
                 <Tab fx:id="showTrainingDataTab" text="Show training data"/>
                 <Tab fx:id="readTestDataTab" text="Read test data"/>
                 <Tab fx:id="showTestDataTab" text="Show test data"/>
-                <Tab fx:id="neuralNetworkTab" text="Neutral network"/>
+                <Tab fx:id="neuralNetworkTab" text="Neural network"/>
                 <Tab fx:id="machineLearningTab" text="Machine learning"/>
             </tabs>
         </TabPane>

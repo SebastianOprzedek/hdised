@@ -13,7 +13,7 @@ import pl.hdised.calibration.common.gui.fx.dialog.Dialog;
 import pl.hdised.calibration.common.gui.fx.scene.LoadingScene;
 import pl.hdised.calibration.common.gui.fx.util.SceneSwitcher;
 import pl.hdised.calibration.common.neuralnetwork.NeuralNetworkController;
-import pl.hdised.calibration.common.neuralnetwork.model.TrainingDataPosition;
+import pl.hdised.calibration.common.neuralnetwork.model.NeuralNetworkDataPosition;
 import pl.hdised.calibration.model.CalibrationData;
 import pl.hdised.calibration.model.CalibrationTrainingDataPosition;
 
@@ -50,8 +50,8 @@ public class NeuralNetworkTabController extends SceneSwitcher {
 
     @FXML
     protected void train(ActionEvent event) throws IOException {
-        Task task = new Task<TrainingDataPosition[]>() {
-            protected TrainingDataPosition[] call() throws IOException {
+        Task task = new Task<NeuralNetworkDataPosition[]>() {
+            protected NeuralNetworkDataPosition[] call() throws IOException {
                 CalibrationData calibrationData = mainController.getTrainingData();
                 double[][] inputData = {calibrationData.getTankIds(), calibrationData.getFuelHeights()};
                 double[][] outputData = {calibrationData.getFuelVolumes()};
@@ -77,10 +77,10 @@ public class NeuralNetworkTabController extends SceneSwitcher {
         new Thread(task).start();
     }
 
-    private void updateTable(TrainingDataPosition[] trainingDataPositions) {
+    private void updateTable(NeuralNetworkDataPosition[] neuralNetworkDataPositions) {
         data = FXCollections.observableArrayList();
-        for (TrainingDataPosition trainingDataPosition : trainingDataPositions)
-            data.add(new CalibrationTrainingDataPosition(trainingDataPosition));
+        for (NeuralNetworkDataPosition neuralNetworkDataPosition : neuralNetworkDataPositions)
+            data.add(new CalibrationTrainingDataPosition(neuralNetworkDataPosition));
         trainingDataPositionTable.setItems(data);
     }
 
