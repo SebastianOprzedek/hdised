@@ -93,9 +93,6 @@ public class Neuron {
         outputValue = values[1];
         gradient = values[2];
         for (int i = 0; i < outputWeights.length; ++i) {
-            int a = values.length;
-            int b = 2 * i + 4;
-            int c = outputWeights.length;
             outputWeights[i].weight = values[2*i+3];
             outputWeights[i].deltaWeight = values[2*i+4];
         }
