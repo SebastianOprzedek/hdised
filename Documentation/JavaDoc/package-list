@@ -1,0 +1,16 @@
+pl.hdised.calibration.common
+pl.hdised.calibration.common.gui.fx.controller
+pl.hdised.calibration.common.gui.fx.dialog
+pl.hdised.calibration.common.gui.fx.scene
+pl.hdised.calibration.common.gui.fx.util
+pl.hdised.calibration.common.neuralnetwork
+pl.hdised.calibration.common.neuralnetwork.model
+pl.hdised.calibration.common.neuralnetwork.util
+pl.hdised.calibration.common.resourcehelper
+pl.hdised.calibration.gui
+pl.hdised.calibration.gui.controller
+pl.hdised.calibration.gui.scene
+pl.hdised.calibration.input
+pl.hdised.calibration.model
+pl.hdised.calibration.util.algorithm
+pl.hdised.calibration.util.function
